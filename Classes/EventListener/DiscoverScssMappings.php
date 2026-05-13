@@ -133,7 +133,14 @@ final class DiscoverScssMappings
             if ($cleanName === '' || is_array($value)) {
                 continue;
             }
-            $result[$cleanName] = (string)$value;
+            $stringValue = (string)$value;
+            // Skip empty strings — they would otherwise be injected as
+            // empty SCSS values and break functions like shade-color() in
+            // Bootstrap when a site setting is unset.
+            if ($stringValue === '') {
+                continue;
+            }
+            $result[$cleanName] = $stringValue;
         }
         return $result;
     }
