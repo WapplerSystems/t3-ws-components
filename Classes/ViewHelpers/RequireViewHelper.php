@@ -13,8 +13,10 @@ use WapplerSystems\WsScssComponents\Compilation\ScssComponentCompiler;
  * main template's mapping decides which SCSS file(s) the key resolves to.
  *
  * Usage:
- *   {namespace ws=WapplerSystems\WsScssComponents\ViewHelpers}
- *   <ws:require key="form" />
+ *   <scssComponents:require key="form" />
+ *
+ * The "scssComponents" Fluid namespace is registered globally by this
+ * extension's ext_localconf.php, so no xmlns declaration is required.
  *
  * Only emits CSS when the surrounding template is actually rendered.
  */
