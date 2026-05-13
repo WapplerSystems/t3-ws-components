@@ -22,6 +22,9 @@ class ScssComponentRegistry
     /** @var array<string, string[]> */
     private array $componentMap = [];
 
+    /** @var array<string, string[]> */
+    private array $componentIncludes = [];
+
     /** @var string[] */
     private array $siteImports = [];
 
@@ -35,12 +38,21 @@ class ScssComponentRegistry
     ) {}
 
     /**
-     * @param string[] $files Paths (EXT:… or absolute web paths) to SCSS files
+     * @param string[] $files    Paths (EXT:… or absolute web paths) to SCSS files
+     * @param string[] $includes Component keys whose CSS is already embedded by
+     *                           compiling this component (transitive @imports).
+     *                           Standalone requests for any of these after this
+     *                           component was required are no-ops.
      */
-    public function register(string $key, array $files): void
+    public function register(string $key, array $files, array $includes = []): void
     {
         $existing = $this->componentMap[$key] ?? [];
         $this->componentMap[$key] = array_values(array_unique([...$existing, ...$files]));
+
+        if ($includes !== []) {
+            $existingIncludes = $this->componentIncludes[$key] ?? [];
+            $this->componentIncludes[$key] = array_values(array_unique([...$existingIncludes, ...$includes]));
+        }
     }
 
     /**
@@ -64,6 +76,13 @@ class ScssComponentRegistry
     {
         $this->initialize();
         return $this->componentMap[$key] ?? [];
+    }
+
+    /** @return string[] */
+    public function getIncludes(string $key): array
+    {
+        $this->initialize();
+        return $this->componentIncludes[$key] ?? [];
     }
 
     /** @return string[] */

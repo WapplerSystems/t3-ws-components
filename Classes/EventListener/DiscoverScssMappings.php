@@ -63,12 +63,47 @@ final class DiscoverScssMappings
             $registry->addSiteImports(array_values(array_filter(array_map('strval', $siteImports))));
         }
 
-        foreach ((array)($config['components'] ?? []) as $key => $files) {
-            if (!is_string($key) || $key === '' || !is_array($files)) {
+        foreach ((array)($config['components'] ?? []) as $key => $definition) {
+            if (!is_string($key) || $key === '' || !is_array($definition)) {
                 continue;
             }
-            $registry->register($key, array_values(array_filter(array_map('strval', $files))));
+            [$files, $includes] = $this->normalizeComponentDefinition($definition);
+            if ($files === []) {
+                continue;
+            }
+            $registry->register($key, $files, $includes);
         }
+    }
+
+    /**
+     * Accepts either the flat list form
+     *   key:
+     *     - 'EXT:foo/Resources/.../a.scss'
+     *     - 'EXT:foo/Resources/.../b.scss'
+     * or the map form
+     *   key:
+     *     files:
+     *       - 'EXT:foo/Resources/.../a.scss'
+     *     includes:
+     *       - pagination
+     *
+     * @param array<int|string, mixed> $definition
+     * @return array{0: string[], 1: string[]}
+     */
+    private function normalizeComponentDefinition(array $definition): array
+    {
+        $isList = array_is_list($definition);
+        if ($isList) {
+            $files = $definition;
+            $includes = [];
+        } else {
+            $files = (array)($definition['files'] ?? []);
+            $includes = (array)($definition['includes'] ?? []);
+        }
+        return [
+            array_values(array_filter(array_map('strval', $files), static fn($v) => $v !== '')),
+            array_values(array_filter(array_map('strval', $includes), static fn($v) => $v !== '')),
+        ];
     }
 
     /**

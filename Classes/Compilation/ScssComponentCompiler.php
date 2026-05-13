@@ -18,6 +18,12 @@ use WapplerSystems\WsScssComponents\Registry\ScssComponentRegistry;
  * CSS file with the AssetCollector.
  *
  * Idempotent per request — every key is processed at most once.
+ *
+ * Components may declare in the YAML which other component keys they already
+ * embed via transitive @imports (registry `includes`). After the parent is
+ * required, those embedded components are marked processed too, so a
+ * subsequent standalone require call for them becomes a no-op and the same
+ * CSS isn't emitted twice on the page.
  */
 class ScssComponentCompiler implements LoggerAwareInterface
 {
@@ -37,6 +43,10 @@ class ScssComponentCompiler implements LoggerAwareInterface
             return;
         }
         $this->processed[$key] = true;
+
+        foreach ($this->registry->getIncludes($key) as $includedKey) {
+            $this->processed[$includedKey] = true;
+        }
 
         $files = $this->registry->getFiles($key);
         if ($files === []) {
