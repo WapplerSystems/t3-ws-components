@@ -1,0 +1,21 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  WapplerSystems\WsScssComponents\:
+    resource: '../Classes/*'
+    exclude: '../Classes/{Event}'
+
+  WapplerSystems\WsScssComponents\Registry\ScssComponentRegistry:
+    public: true
+
+  WapplerSystems\WsScssComponents\Compilation\ScssComponentCompiler:
+    public: true
+
+  WapplerSystems\WsScssComponents\ViewHelpers\RequireViewHelper:
+    public: true
+
+  WapplerSystems\WsScssComponents\DataProcessing\ScssComponentProcessor:
+    public: true

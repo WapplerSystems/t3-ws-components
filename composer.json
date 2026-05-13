@@ -1,0 +1,31 @@
+{
+    "name": "wapplersystems/ws-scss-components",
+    "type": "typo3-cms-extension",
+    "description": "Modular SCSS component loader for TYPO3 — extensions request a key, the active main template maps it to SCSS files, ws_scss compiles per-key.",
+    "keywords": ["TYPO3", "scss", "components", "modular"],
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Sven Wappler",
+            "email": "typo3@wappler.systems",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "typo3/cms-core": "^14.0",
+        "typo3/cms-frontend": "^14.0",
+        "typo3/cms-fluid": "^14.0",
+        "wapplersystems/ws-scss": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "WapplerSystems\\WsScssComponents\\": "Classes/"
+        }
+    },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "ws_scss_components"
+        }
+    }
+}
