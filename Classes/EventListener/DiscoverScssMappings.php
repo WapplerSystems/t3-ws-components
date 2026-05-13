@@ -7,18 +7,16 @@ use Symfony\Component\Yaml\Yaml;
 use TYPO3\CMS\Core\Attribute\AsEventListener;
 use TYPO3\CMS\Core\Package\PackageManager;
 use WapplerSystems\WsScssComponents\Event\RegisterScssComponentsEvent;
-use WapplerSystems\WsScssComponents\Util\SiteSetActivation;
+use WapplerSystems\WsScssComponents\Util\SitePackageActivation;
 
 /**
- * Discovers Configuration/ScssComponents.yaml in every active extension and
- * registers its mappings — but only when the extension's Site Set is active
- * for the currently rendered site.
+ * Discovers Configuration/ScssComponents.yaml in every active package and
+ * registers its mappings — but only when the package is active for the
+ * currently rendered site (i.e. one of its Site Sets is included, or — for
+ * packages without Site Sets — its composer name matches an active Set).
  *
- * Convention: the Site Set name equals the extension's composer package name
- * (e.g. composer "t3bootstrap/template" maps to Site Set "t3bootstrap/template").
- * Extensions that don't ship a matching Site Set, or whose Set isn't active
- * for the current site, are silently skipped — so multiple main templates can
- * coexist in one TYPO3 install without leaking SCSS into each other's compiles.
+ * Multiple main templates / site packages can coexist in one TYPO3 install
+ * without leaking SCSS into each other's compiles.
  *
  * Additionally forwards plugin.tx_wsscss.variables.* from the current frontend
  * TypoScript setup as site variables — those are genuinely site-wide and not
@@ -30,7 +28,7 @@ final class DiscoverScssMappings
 
     public function __construct(
         private readonly PackageManager $packageManager,
-        private readonly SiteSetActivation $siteSetActivation,
+        private readonly SitePackageActivation $sitePackageActivation,
     ) {}
 
     #[AsEventListener('ws-scss-components/discover-scss-mappings')]
@@ -43,12 +41,7 @@ final class DiscoverScssMappings
             if (!is_file($yamlPath)) {
                 continue;
             }
-
-            $composerName = $package->getValueFromComposerManifest('name');
-            if (!is_string($composerName) || $composerName === '') {
-                continue;
-            }
-            if (!$this->siteSetActivation->isSetActiveForCurrentRequest($composerName)) {
+            if (!$this->sitePackageActivation->isPackageActiveForCurrentRequest($package)) {
                 continue;
             }
 
