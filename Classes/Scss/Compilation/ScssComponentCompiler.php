@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace WapplerSystems\WsScssComponents\Compilation;
+namespace WapplerSystems\WsComponents\Scss\Compilation;
 
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
@@ -10,7 +10,7 @@ use TYPO3\CMS\Core\Page\AssetCollector;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 use WapplerSystems\WsScss\Compiler as ScssCompiler;
-use WapplerSystems\WsScssComponents\Registry\ScssComponentRegistry;
+use WapplerSystems\WsComponents\Scss\Registry\ScssComponentRegistry;
 
 /**
  * Resolves a component key into SCSS files, builds a virtual entry SCSS,

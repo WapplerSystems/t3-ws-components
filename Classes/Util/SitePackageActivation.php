@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace WapplerSystems\WsScssComponents\Util;
+namespace WapplerSystems\WsComponents\Util;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Component\Yaml\Yaml;

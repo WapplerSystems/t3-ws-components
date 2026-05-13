@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace WapplerSystems\WsScssComponents\DataProcessing;
+namespace WapplerSystems\WsComponents\Scss\DataProcessing;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\ContentObject\DataProcessorInterface;
-use WapplerSystems\WsScssComponents\Compilation\ScssComponentCompiler;
+use WapplerSystems\WsComponents\Scss\Compilation\ScssComponentCompiler;
 
 /**
  * Requests SCSS components from inside TypoScript — useful when you cannot or
@@ -14,7 +14,7 @@ use WapplerSystems\WsScssComponents\Compilation\ScssComponentCompiler;
  *
  * Example:
  *   tt_content.list.20.pagination_pi1 {
- *     dataProcessing.10 = WapplerSystems\WsScssComponents\DataProcessing\ScssComponentProcessor
+ *     dataProcessing.10 = WapplerSystems\WsComponents\Scss\DataProcessing\ScssComponentProcessor
  *     dataProcessing.10.keys = pagination,form
  *   }
  *

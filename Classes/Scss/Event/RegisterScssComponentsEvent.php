@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace WapplerSystems\WsScssComponents\Event;
+namespace WapplerSystems\WsComponents\Scss\Event;
 
-use WapplerSystems\WsScssComponents\Registry\ScssComponentRegistry;
+use WapplerSystems\WsComponents\Scss\Registry\ScssComponentRegistry;
 
 /**
  * Dispatched once per request when the registry is first read.

@@ -1,13 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace WapplerSystems\WsScssComponents\EventListener;
+namespace WapplerSystems\WsComponents\Scss\EventListener;
 
 use Symfony\Component\Yaml\Yaml;
 use TYPO3\CMS\Core\Attribute\AsEventListener;
 use TYPO3\CMS\Core\Package\PackageManager;
-use WapplerSystems\WsScssComponents\Event\RegisterScssComponentsEvent;
-use WapplerSystems\WsScssComponents\Util\SitePackageActivation;
+use WapplerSystems\WsComponents\Scss\Event\RegisterScssComponentsEvent;
+use WapplerSystems\WsComponents\Scss\Registry\ScssComponentRegistry;
+use WapplerSystems\WsComponents\Util\SitePackageActivation;
 
 /**
  * Discovers Configuration/ScssComponents.yaml in every active package and
@@ -31,7 +32,7 @@ final class DiscoverScssMappings
         private readonly SitePackageActivation $sitePackageActivation,
     ) {}
 
-    #[AsEventListener('ws-scss-components/discover-scss-mappings')]
+    #[AsEventListener('ws-components/discover-scss-mappings')]
     public function __invoke(RegisterScssComponentsEvent $event): void
     {
         $registry = $event->getRegistry();
@@ -54,7 +55,7 @@ final class DiscoverScssMappings
         }
     }
 
-    private function applyYaml(\WapplerSystems\WsScssComponents\Registry\ScssComponentRegistry $registry, string $yamlPath): void
+    private function applyYaml(ScssComponentRegistry $registry, string $yamlPath): void
     {
         $config = (array)(Yaml::parseFile($yamlPath) ?? []);
 

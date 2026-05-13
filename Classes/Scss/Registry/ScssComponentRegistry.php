@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace WapplerSystems\WsScssComponents\Registry;
+namespace WapplerSystems\WsComponents\Scss\Registry;
 
 use Psr\EventDispatcher\EventDispatcherInterface;
-use WapplerSystems\WsScssComponents\Event\RegisterScssComponentsEvent;
+use WapplerSystems\WsComponents\Scss\Event\RegisterScssComponentsEvent;
 
 /**
  * Holds the key → SCSS files mapping plus site-wide imports / variables.

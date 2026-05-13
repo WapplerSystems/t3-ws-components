@@ -1,8 +1,8 @@
 <?php
 
 $EM_CONF[$_EXTKEY] = [
-    'title' => 'WS SCSS Components',
-    'description' => 'Modular SCSS component loader. Extensions request a key (e.g. "form"); the active main template maps it to SCSS files, ws_scss compiles per-key.',
+    'title' => 'WS Components',
+    'description' => 'Modular SCSS and JS component loader. Extensions request a key (e.g. "form" or "glightbox"); the active site package maps it to files, scss is compiled per key, js is enqueued via AssetCollector.',
     'category' => 'fe',
     'author' => 'Sven Wappler',
     'author_email' => 'typo3@wappler.systems',

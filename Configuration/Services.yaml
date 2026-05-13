@@ -4,18 +4,27 @@ services:
     autoconfigure: true
     public: false
 
-  WapplerSystems\WsScssComponents\:
+  WapplerSystems\WsComponents\:
     resource: '../Classes/*'
-    exclude: '../Classes/{Event}'
+    exclude: '../Classes/{Scss/Event,Js/Event}'
 
-  WapplerSystems\WsScssComponents\Registry\ScssComponentRegistry:
+  WapplerSystems\WsComponents\Scss\Registry\ScssComponentRegistry:
     public: true
 
-  WapplerSystems\WsScssComponents\Compilation\ScssComponentCompiler:
+  WapplerSystems\WsComponents\Scss\Compilation\ScssComponentCompiler:
     public: true
 
-  WapplerSystems\WsScssComponents\ViewHelpers\RequireViewHelper:
+  WapplerSystems\WsComponents\Scss\ViewHelpers\RequireViewHelper:
     public: true
 
-  WapplerSystems\WsScssComponents\DataProcessing\ScssComponentProcessor:
+  WapplerSystems\WsComponents\Scss\DataProcessing\ScssComponentProcessor:
+    public: true
+
+  WapplerSystems\WsComponents\Js\Registry\JsComponentRegistry:
+    public: true
+
+  WapplerSystems\WsComponents\Js\Loader\JsComponentLoader:
+    public: true
+
+  WapplerSystems\WsComponents\Js\ViewHelpers\RequireViewHelper:
     public: true

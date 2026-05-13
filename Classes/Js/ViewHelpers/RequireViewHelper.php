@@ -1,24 +1,25 @@
 <?php
 declare(strict_types=1);
 
-namespace WapplerSystems\WsScssComponents\ViewHelpers;
+namespace WapplerSystems\WsComponents\Js\ViewHelpers;
 
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use WapplerSystems\WsScssComponents\Compilation\ScssComponentCompiler;
+use WapplerSystems\WsComponents\Js\Loader\JsComponentLoader;
 
 /**
- * Marks a SCSS component as required by the surrounding template. The active
- * main template's mapping decides which SCSS file(s) the key resolves to.
+ * Marks a JS component as required by the surrounding template. The active
+ * package's mapping decides which file(s) the key resolves to and which
+ * attributes (defer/async/type) are applied.
  *
  * Usage:
- *   <scssComponents:require key="form" />
+ *   <jsComponents:require key="glightbox" />
  *
- * The "scssComponents" Fluid namespace is registered globally by this
+ * The "jsComponents" Fluid namespace is registered globally by this
  * extension's ext_localconf.php, so no xmlns declaration is required.
  *
- * Only emits CSS when the surrounding template is actually rendered.
+ * Only enqueues when the surrounding template is actually rendered.
  */
 final class RequireViewHelper extends AbstractViewHelper
 {
@@ -27,13 +28,13 @@ final class RequireViewHelper extends AbstractViewHelper
 
     public function initializeArguments(): void
     {
-        $this->registerArgument('key', 'string', 'Component key registered by the main template', true);
+        $this->registerArgument('key', 'string', 'Component key registered by the active package', true);
     }
 
     public function render(): string
     {
         $key = (string)$this->arguments['key'];
-        GeneralUtility::makeInstance(ScssComponentCompiler::class)->requireComponent($key);
+        GeneralUtility::makeInstance(JsComponentLoader::class)->requireComponent($key);
         return '';
     }
 
@@ -42,7 +43,7 @@ final class RequireViewHelper extends AbstractViewHelper
         \Closure $renderChildrenClosure,
         RenderingContextInterface $renderingContext,
     ): string {
-        GeneralUtility::makeInstance(ScssComponentCompiler::class)
+        GeneralUtility::makeInstance(JsComponentLoader::class)
             ->requireComponent((string)$arguments['key']);
         return '';
     }
