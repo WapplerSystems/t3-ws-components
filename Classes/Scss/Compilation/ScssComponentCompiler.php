@@ -90,7 +90,7 @@ class ScssComponentCompiler implements LoggerAwareInterface
             return;
         }
 
-        $webPath = PathUtility::getAbsoluteWebPath($absolutePath);
+        $webPath = PathUtility::stripPathSitePrefix($absolutePath);
 
         $this->assetCollector->addStyleSheet(
             'ws-scss-component-' . $key,

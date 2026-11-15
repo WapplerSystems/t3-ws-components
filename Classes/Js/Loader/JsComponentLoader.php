@@ -59,7 +59,7 @@ class JsComponentLoader implements LoggerAwareInterface
                 ]);
                 continue;
             }
-            $webPath = PathUtility::getAbsoluteWebPath($absolute);
+            $webPath = str_starts_with($file, 'EXT:') ? $file : PathUtility::stripPathSitePrefix($absolute);
 
             $identifier = 'ws-js-component-' . $key . (count($entries) > 1 ? '-' . $index : '');
             $this->assetCollector->addJavaScript(
